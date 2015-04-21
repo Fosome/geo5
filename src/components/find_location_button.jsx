@@ -24,7 +24,6 @@ export default React.createClass({
       );
     }
     else {
-      // beef this up
       this.findError();
     }
   },
@@ -36,5 +35,6 @@ export default React.createClass({
 
   findError: function() {
     this.props.onFinding(false);
+    this.props.onMessage("Location unavailable");
   }
 })

@@ -5,7 +5,7 @@
   "main": "bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server -wd"
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
