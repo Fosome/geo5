@@ -1,0 +1,30 @@
+{
+  "name": "geo5",
+  "version": "1.0.0",
+  "description": "Geo5",
+  "main": "bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server -wd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fosome/geo5.git"
+  },
+  "author": "Fosome",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Fosome/geo5/issues"
+  },
+  "homepage": "https://github.com/Fosome/geo5",
+  "devDependencies": {
+    "babel": "^5.1.11",
+    "babel-core": "^5.1.11",
+    "babel-loader": "^5.0.0",
+    "webpack": "^1.8.5",
+    "webpack-dev-server": "^1.8.1"
+  },
+  "dependencies": {
+    "react": "^0.13.2"
+  }
+}
