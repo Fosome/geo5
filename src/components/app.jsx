@@ -4,15 +4,17 @@ import Flash              from "components/flash"
 import GeoCoordinates     from "components/geo_coordinates"
 import FindLocationButton from "components/find_location_button"
 import FindSpinner        from "components/find_spinner"
+import RecentHistory      from "components/recent_history"
+import Locations          from "stores/locations"
+import Location           from "models/location"
 
 export default React.createClass({
 
   getInitialState() {
     return {
+      currentLocation: null,
       flashMessage: null,
       finding: false,
-      latitude: null,
-      longitude: null
     }
   },
 
@@ -21,10 +23,15 @@ export default React.createClass({
       <div>
         <GeoHeader />
         <Flash message={this.state.flashMessage} />
-        <GeoCoordinates latitude={this.state.latitude} longitude={this.state.longitude} />
-        <br/><br/>
+
+        <GeoCoordinates location={this.state.currentLocation} />
+        <br/>
         <FindLocationButton onFinding={this.updateFinding} onFound={this.updateLocation} onMessage={this.updateFlash} />
         <FindSpinner finding={this.state.finding} />
+
+        <br/><br/>
+
+        <RecentHistory locations={Locations.all()} />
       </div>
     );
   },
@@ -42,9 +49,15 @@ export default React.createClass({
   },
 
   updateLocation(position) {
+    var loc = new Location(
+      position.coords.latitude,
+      position.coords.longitude
+    );
+
+    Locations.save(loc)
+
     this.setState({
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
+      currentLocation: loc
     });
   }
 })
