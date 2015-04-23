@@ -8,11 +8,11 @@ export default React.createClass({
       <button className="btn btn-primary" onClick={this.find}>
         Find Location
       </button>
-    );
+    )
   },
 
   find: function(e) {
-    this.props.onFinding(true);
+    this.props.onFinding(true)
 
     if(Modernizr.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -21,20 +21,20 @@ export default React.createClass({
         {
           enableHighAccuracy: true
         }
-      );
+      )
     }
     else {
-      this.findError();
+      this.findError()
     }
   },
 
   findSuccess: function(position) {
-    this.props.onFound(position);
-    this.props.onFinding(false);
+    this.props.onFound(position)
+    this.props.onFinding(false)
   },
 
   findError: function() {
-    this.props.onFinding(false);
-    this.props.onMessage("Location unavailable");
+    this.props.onFinding(false)
+    this.props.onMessage("Location unavailable")
   }
 })

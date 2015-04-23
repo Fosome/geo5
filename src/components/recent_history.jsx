@@ -3,7 +3,7 @@ import React from "react"
 export default React.createClass({
 
   render() {
-    var locs = [];
+    var locs = []
 
     for (var i in this.props.locations) {
       locs.push(
@@ -11,7 +11,7 @@ export default React.createClass({
           <td>{this.props.locations[i].latitude}</td>
           <td>{this.props.locations[i].longitude}</td>
         </tr>
-      );
+      )
     }
 
     return (
@@ -30,5 +30,5 @@ export default React.createClass({
         </table>
       </div>
     )
-  },
+  }
 })

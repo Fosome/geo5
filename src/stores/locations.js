@@ -1,15 +1,28 @@
-import Location from "models/location"
+import EventEmitter from "events"
+import Location     from "models/location"
 
-var _locations = [];
+var _locations = []
+var _emitter = new EventEmitter()
 
-export default class Locations {
+const CHANGE_EVENT = "change"
 
-  static all() {
-    return _locations;
-  }
+export default {
 
-  static save(loc) {
-    _locations.unshift(loc);
-    return true;
+  all() {
+    return _locations
+  },
+
+  save(loc) {
+    _locations.unshift(loc)
+    _emitter.emit(CHANGE_EVENT)
+    return true
+  },
+
+  addListener(callback) {
+    _emitter.on(CHANGE_EVENT, callback)
+  },
+
+  removeListener(callback) {
+    _emitter.removeListener(CHANGE_EVENT, callback)
   }
 }
