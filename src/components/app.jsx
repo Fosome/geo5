@@ -1,15 +1,18 @@
-import React         from "react"
-import GeoHeader     from "components/geo_header"
-import Flash         from "components/flash"
-import GeoFinder     from "components/geo_finder"
-import RecentHistory from "components/recent_history"
-import Locations     from "stores/locations"
+import React           from "react"
+import Router          from "react-router"
+import GeoHeader       from "components/geo_header"
+import Flash           from "components/flash"
+import Navigation      from "components/navigation"
+import GeoFinder       from "components/geo_finder"
+import Locations       from "stores/locations"
+
+var RouteHandler = Router.RouteHandler
 
 export default React.createClass({
 
   getInitialState() {
     return {
-      locations: Locations.all(),
+      locations:    Locations.all(),
       flashMessage: null
     }
   },
@@ -26,9 +29,10 @@ export default React.createClass({
     return (
       <div>
         <GeoHeader />
-        <Flash message={this.state.flashMessage} />
-        <GeoFinder onMessage={this.updateFlash} />
-        <RecentHistory locations={this.state.locations} />
+        <Navigation />
+        <Flash message={ this.state.flashMessage } />
+
+        <RouteHandler onMessage={ this.updateFlash } />
       </div>
     )
   },
@@ -43,7 +47,5 @@ export default React.createClass({
     this.setState({
       locations: Locations.all()
     })
-
-    console.log(this.state.locations)
   }
 })

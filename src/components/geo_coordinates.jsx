@@ -3,13 +3,24 @@ import React from "react"
 export default React.createClass({
 
   render() {
-    var loc = this.props.location
+    return (
+      <div style={{ "marginTop": "20px" }}>
+        <div style={{ "fontSize": "16px" }}>
+          <b>Latitude</b>: { this._currentLatitude() }
+        </div>
 
-    return loc ? (
-      <div>
-        <b>Latitude:</b> {loc.latitude}<br/>
-        <b>Longitude:</b> {loc.longitude}
+        <div style={{ "fontSize": "16px" }}>
+          <b>Longitude</b>: { this._currentLongitude() }
+        </div>
       </div>
-    ): null
-  }
+    )
+  },
+
+  _currentLatitude() {
+    return this.props.location ? this.props.location.latitude : <span className="glyphicon glyphicon-remove"/>
+  },
+
+  _currentLongitude() {
+    return this.props.location ? this.props.location.longitude : <span className="glyphicon glyphicon-remove"/>
+  },
 })

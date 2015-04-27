@@ -1,15 +1,22 @@
-import React from "react"
+import React      from "react"
+import Locations  from "stores/locations"
 
 export default React.createClass({
+
+  getInitialState() {
+    return {
+      locations: Locations.all(),
+    }
+  },
 
   render() {
     var locs = []
 
-    for (var i in this.props.locations) {
+    for (var i in this.state.locations) {
       locs.push(
-        <tr>
-          <td>{this.props.locations[i].latitude}</td>
-          <td>{this.props.locations[i].longitude}</td>
+        <tr key={i}>
+          <td>{this.state.locations[i].latitude}</td>
+          <td>{this.state.locations[i].longitude}</td>
         </tr>
       )
     }

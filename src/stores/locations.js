@@ -12,6 +12,10 @@ export default {
     return _locations
   },
 
+  latest() {
+    return _locations[0]
+  },
+
   save(loc) {
     _locations.unshift(loc)
     _emitter.emit(CHANGE_EVENT)

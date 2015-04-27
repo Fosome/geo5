@@ -9,8 +9,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      currentLocation: null,
-      finding: false,
+      currentLocation: Locations.latest(),
+      finding: false
     }
   },
 
