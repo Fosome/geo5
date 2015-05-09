@@ -1,50 +1,56 @@
-import React              from "react"
-import GeoCoordinates     from "components/geo_coordinates"
-import FindLocationButton from "components/find_location_button"
-import FindSpinner        from "components/find_spinner"
-import Locations          from "stores/locations"
-import Location           from "models/location"
+import React                    from "react"
 
-export default React.createClass({
+import GeoCoordinates           from "components/geo_coordinates"
+import FindLocationButton       from "components/find_location_button"
+import FindSpinner              from "components/find_spinner"
+
+import CurrentGeoLocationStore  from "stores/current_geo_location_store"
+
+let GeoFinder = React.createClass({
 
   getInitialState() {
     return {
-      currentLocation: Locations.latest(),
+      currentGeoLocation: CurrentGeoLocationStore.get(),
       finding: false
     }
+  },
+
+  componentDidMount() {
+    CurrentGeoLocationStore.addChangeListener(this._onChange)
+  },
+
+  componentWillUnmount() {
+    CurrentGeoLocationStore.removeChangeListener(this._onChange)
   },
 
   render() {
     return (
       <div>
-        <GeoCoordinates location={this.state.currentLocation} />
+        <GeoCoordinates location={this.state.currentGeoLocation} />
+
         <br/>
-        <FindLocationButton onFinding={this.updateFinding} onFound={this.updateLocation} onMessage={this.updateFlash} />
-        <FindSpinner finding={this.state.finding} />
+
+        <FindLocationButton onFinding={this._updateFinding} onMessage={this._updateFlash} />
+        <FindSpinner active={this.state.finding} />
       </div>
     )
   },
 
-  updateFinding(value) {
+  _onChange() {
+    this.setState({
+      currentGeoLocation: CurrentGeoLocationStore.get(),
+    })
+  },
+
+  _updateFinding(value) {
     this.setState({
       finding: value
     })
   },
 
-  updateLocation(position) {
-    var loc = new Location(
-      position.coords.latitude,
-      position.coords.longitude
-    )
-
-    Locations.save(loc)
-
-    this.setState({
-      currentLocation: loc
-    })
-  },
-
-  updateFlash(message) {
+  _updateFlash(message) {
     this.props.onMessage(message)
   }
 })
+
+export default GeoFinder

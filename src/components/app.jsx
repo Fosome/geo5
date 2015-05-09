@@ -1,38 +1,37 @@
 import React           from "react"
-import Router          from "react-router"
+
 import GeoHeader       from "components/geo_header"
 import Flash           from "components/flash"
-import Navigation      from "components/navigation"
 import GeoFinder       from "components/geo_finder"
-import Locations       from "stores/locations"
-
-var RouteHandler = Router.RouteHandler
+import RecentHistory   from "components/recent_history"
+import SyncSpinner     from "components/sync_spinner"
 
 export default React.createClass({
 
   getInitialState() {
     return {
-      locations:    Locations.all(),
-      flashMessage: null
+      flashMessage: null,
+      syncing :     false
     }
   },
 
   componentDidMount() {
-    Locations.addListener(this._onChange);
   },
 
   componentDidUnmount() {
-    Locations.removeListener(this._onChange);
   },
 
   render() {
     return (
       <div>
         <GeoHeader />
-        <Navigation />
         <Flash message={ this.state.flashMessage } />
 
-        <RouteHandler onMessage={ this.updateFlash } />
+        <GeoFinder />
+
+        <RecentHistory />
+
+        <SyncSpinner active={ this.state.syncing }/>
       </div>
     )
   },
@@ -43,9 +42,9 @@ export default React.createClass({
     })
   },
 
-  _onChange() {
+  onSync(value) {
     this.setState({
-      locations: Locations.all()
+      syncing: value
     })
   }
 })

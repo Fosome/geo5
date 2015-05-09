@@ -1,25 +1,32 @@
-import React      from "react"
-import Locations  from "stores/locations"
+import React                          from "react"
 
-export default React.createClass({
+import RecentHistoryGeoLocationStore  from "stores/recent_history_geo_location_store"
+
+let RecentHistory = React.createClass({
 
   getInitialState() {
     return {
-      locations: Locations.all(),
+      locations: RecentHistoryGeoLocationStore.all()
     }
   },
 
-  render() {
-    var locs = []
+  componentDidMount() {
+    RecentHistoryGeoLocationStore.addChangeListener(this._onChange)
+  },
 
-    for (var i in this.state.locations) {
-      locs.push(
-        <tr key={i}>
-          <td>{this.state.locations[i].latitude}</td>
-          <td>{this.state.locations[i].longitude}</td>
-        </tr>
-      )
-    }
+  componentWillUnmount() {
+    RecentHistoryGeoLocationStore.removeChangeListener(this._onChange)
+  },
+
+  render() {
+    let rows = this.state.locations.map(function (l) { 
+        return (
+          <tr>
+            <td>{l.latitude}</td>
+            <td>{l.longitude}</td>
+          </tr>
+        )
+    })
 
     return (
       <div>
@@ -32,10 +39,18 @@ export default React.createClass({
               <th>Longitude</th>
             </tr>
 
-            { locs }
+            { rows }
           </tbody>
         </table>
       </div>
     )
+  },
+
+  _onChange() {
+    this.setState({
+      locations: RecentHistoryGeoLocationStore.all()
+    })
   }
 })
+
+export default RecentHistory
