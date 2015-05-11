@@ -12,6 +12,7 @@ let RecentHistory = React.createClass({
 
   componentDidMount() {
     RecentHistoryGeoLocationStore.addChangeListener(this._onChange)
+    //RecentHistoryGeoLocationStore.sync()
   },
 
   componentWillUnmount() {
